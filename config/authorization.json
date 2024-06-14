@@ -1,0 +1,16 @@
+
+{
+    "roles": {
+      "ADMIN": [
+        "/admin/*"
+      ],
+      "USER": [
+        "/user/*"
+      ]
+    }
+  }
+
+  /*
+    Roles and addresses to which access is allowed are determined here.
+    Delete this comment line after reading it
+  */

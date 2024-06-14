@@ -1,0 +1,71 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  user_id   Int        @id @default(autoincrement())
+  user_name String     @unique
+  email     String     @unique
+  password  String
+  role      ROLE       @default(USER)
+  profile   UserProfile?
+  verify_code Verify_codes?
+}
+
+model UserProfile {
+  phone_number      String    @unique
+  pP_full_url       String    @unique
+  description       String
+  birth_date_year   Int
+  birth_date_mount  Int
+  birth_date_day    Int
+  mail_verify        Int
+
+  user_id  Int @unique
+  user User?  @relation(fields: [user_id], references: [user_id])
+}
+
+model Verify_codes{
+  code Int
+  is_completed Int 
+  created_time DateTime
+  end_time DateTime
+  user_id  Int @unique
+  user User?  @relation(fields: [user_id], references: [user_id])
+}
+
+model chat_members{
+  chat_id Int @id @default(autoincrement())
+  user1_id Int
+  user2_id Int
+}
+
+model record_name{
+  id Int @id @default(autoincrement())
+  record_name String
+  recorder_user Int
+  recorded_user Int
+  chat_id Int
+}
+
+
+model messages{
+  message_id Int @id @default(autoincrement())
+  content String
+  user1_id Int
+  user2_id Int
+  chat_id Int
+  sending_at DateTime
+}
+
+enum ROLE {
+  USER
+  ADMIN
+}
+
+
